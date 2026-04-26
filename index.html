@@ -14,55 +14,62 @@ body {
 }
 
 .container {
-  max-width: 700px;
-  margin: auto;
-  padding: 24px;
+  max-width:700px;
+  margin:auto;
+  padding:24px;
 }
 
-h1 { font-size: 26px; }
-h2 { margin-top: 30px; }
-p { opacity: 0.7; }
+h1 { font-size:28px; }
+h2 { margin-top:20px; }
+
+.progress {
+  height:6px;
+  background:#1a1a1a;
+  margin:20px 0;
+  border-radius:4px;
+}
+.progress-bar {
+  height:6px;
+  background:#EAEAEA;
+  width:0%;
+}
 
 .section {
-  margin-top: 30px;
-  padding: 20px;
-  border: 1px solid #2A2A2A;
-  border-radius: 8px;
+  margin-top:20px;
+  padding:20px;
+  border:1px solid #2A2A2A;
+  border-radius:8px;
 }
 
 input, textarea, select {
-  width: 100%;
-  margin-top: 10px;
-  padding: 12px;
-  background: transparent;
-  border: 1px solid #2A2A2A;
-  color: #EAEAEA;
-  border-radius: 4px;
+  width:100%;
+  margin-top:10px;
+  padding:12px;
+  background:transparent;
+  border:1px solid #2A2A2A;
+  color:#EAEAEA;
 }
 
 button {
-  margin-top: 16px;
-  padding: 14px;
-  width: 100%;
-  background: #111;
-  border: 1px solid #2A2A2A;
-  color: #EAEAEA;
-  cursor: pointer;
+  margin-top:14px;
+  padding:14px;
+  width:100%;
+  background:#111;
+  border:1px solid #2A2A2A;
+  color:#EAEAEA;
+  cursor:pointer;
 }
 
-button:hover {
-  background: #151515;
-}
+button:hover { background:#151515; }
 
 .hidden { display:none; }
 
 .output {
-  white-space: pre-wrap;
-  background: #111;
-  padding: 16px;
-  margin-top: 20px;
-  border-radius: 6px;
-  border: 1px solid #2A2A2A;
+  white-space:pre-wrap;
+  background:#111;
+  padding:16px;
+  margin-top:16px;
+  border-radius:6px;
 }
 </style>
 </head>
@@ -74,129 +81,242 @@ button:hover {
 <h1>INTERRUPT</h1>
 <p>You are not stuck. You are operating inside a system.</p>
 
+<div class="progress">
+  <div class="progress-bar" id="progressBar"></div>
+</div>
+
 <!-- SECTION 1 -->
 <div class="section" id="section1">
-<h2>1. Identify the Structure</h2>
+<h2>Structure</h2>
 
-<form id="form1">
-
-<label>Where is this happening?</label>
-<select name="domain" id="domain" required>
-<option value="">Select</option>
-<option value="Roles">Roles</option>
-<option value="Environment">Environment</option>
-<option value="Routine">Routine</option>
-<option value="Pressure">Pressure</option>
+<select id="domain">
+<option value="">Select domain</option>
+<option>Roles</option>
+<option>Environment</option>
+<option>Routine</option>
+<option>Pressure</option>
 </select>
 
-<label>Describe what is currently happening</label>
-<textarea name="structure" id="structure" required></textarea>
+<textarea id="structure" placeholder="What is happening?"></textarea>
+<textarea id="pattern" placeholder="What repeats?"></textarea>
 
-<label>What is repeatedly occurring?</label>
-<textarea name="pattern" id="pattern" required></textarea>
+<input id="email" placeholder="Your email">
 
-<label>Your Email</label>
-<input type="email" name="email" id="email" required>
-
-<button type="submit">Continue</button>
-
-</form>
+<button onclick="saveSection1()">Continue</button>
 </div>
 
 <!-- SECTION 2 -->
 <div class="section hidden" id="section2">
-<h2>2. Structural Tension</h2>
+<h2>Structural Tension</h2>
 
-<form id="form2">
+<textarea id="tension" placeholder="Where is the conflict?"></textarea>
+<textarea id="cost" placeholder="What is the cost?"></textarea>
 
-<label>Where is the tension or conflict?</label>
-<textarea name="tension" id="tension" required></textarea>
-
-<label>What is this costing you?</label>
-<textarea name="cost" id="cost" required></textarea>
-
-<input type="hidden" name="domain" id="hiddenDomain">
-<input type="hidden" name="structure" id="hiddenStructure">
-<input type="hidden" name="pattern" id="hiddenPattern">
-<input type="hidden" name="email" id="hiddenEmail">
-
-<button type="submit">Generate System View</button>
-
-</form>
+<button onclick="saveSection2()">Generate Snapshot</button>
 </div>
 
 <!-- OUTPUT -->
 <div class="section hidden" id="outputSection">
 <h2>System Snapshot</h2>
+
 <div class="output" id="output"></div>
+
+<h3 style="margin-top:30px;">What will you change first?</h3>
+<input id="firstMove" placeholder="Define one structural change">
+
+<h3 style="margin-top:20px;">Select move type</h3>
+<button onclick="selectMove('environment')">Adjust environment</button>
+<button onclick="selectMove('reduce')">Reduce one demand</button>
+<button onclick="selectMove('remove')">Remove one pressure</button>
+
+<div id="selectedMove" style="margin-top:10px; opacity:0.6;"></div>
+
+<button onclick="finalise()">Lock First Move</button>
+
+<div id="finalBlock" class="hidden">
+
+<div class="output" id="finalOutput"></div>
+
+<p style="margin-top:20px; opacity:0.6;">
+This will repeat. When it does, run this again.
+</p>
+
+<button onclick="sendReport()">Send Report</button>
+
+<button onclick="goNext()">Stabilise Next →</button>
+
+<button onclick="reset()">Start Again</button>
+
+</div>
 </div>
 
 </div>
 
 <script>
-const form1 = document.getElementById("form1");
-const form2 = document.getElementById("form2");
+let state = JSON.parse(localStorage.getItem("interrupt")) || {};
+let selectedMoveType = "";
 
-form1.addEventListener("submit", async function(e){
-  e.preventDefault();
+function updateProgress(p){
+  document.getElementById("progressBar").style.width = p + "%";
+}
 
-  const data = new FormData(form1);
+function saveSection1(){
+  state.domain = document.getElementById("domain").value;
+  state.structure = document.getElementById("structure").value;
+  state.pattern = document.getElementById("pattern").value;
+  state.email = document.getElementById("email").value;
 
-  await fetch("https://formspree.io/f/YOUR_FORMSPREE_ID", {
-    method: "POST",
-    body: data,
-    headers: { 'Accept': 'application/json' }
-  });
-
-  // pass values to section 2
-  document.getElementById("hiddenDomain").value = data.get("domain");
-  document.getElementById("hiddenStructure").value = data.get("structure");
-  document.getElementById("hiddenPattern").value = data.get("pattern");
-  document.getElementById("hiddenEmail").value = data.get("email");
+  localStorage.setItem("interrupt", JSON.stringify(state));
 
   document.getElementById("section1").classList.add("hidden");
   document.getElementById("section2").classList.remove("hidden");
-});
 
-form2.addEventListener("submit", async function(e){
-  e.preventDefault();
+  updateProgress(50);
+}
 
-  const data = new FormData(form2);
+function saveSection2(){
+  state.tension = document.getElementById("tension").value;
+  state.cost = document.getElementById("cost").value;
 
-  await fetch("https://formspree.io/f/YOUR_FORMSPREE_ID", {
-    method: "POST",
-    body: data,
-    headers: { 'Accept': 'application/json' }
-  });
+  localStorage.setItem("interrupt", JSON.stringify(state));
 
-  // generate output
-  const output = `
+  generateOutput();
+  updateProgress(80);
+}
+
+function generateOutput(){
+  const out = `
 SYSTEM SNAPSHOT
 
-Domain: ${data.get("domain")}
+Domain: ${state.domain}
 
 Structure:
-${data.get("structure")}
+${state.structure}
 
 Pattern:
-${data.get("pattern")}
+${state.pattern}
 
 Tension:
-${data.get("tension")}
+${state.tension}
 
 Cost:
-${data.get("cost")}
+${state.cost}
 
 Insight:
 This is not a personal failure.
 This is a structural condition.
 `;
 
-  document.getElementById("output").innerText = output;
+  document.getElementById("output").innerText = out;
 
   document.getElementById("section2").classList.add("hidden");
   document.getElementById("outputSection").classList.remove("hidden");
-});
+}
+
+function selectMove(type){
+  selectedMoveType = type;
+
+  const labels = {
+    environment: "Adjust environment",
+    reduce: "Reduce one demand",
+    remove: "Remove one pressure"
+  };
+
+  document.getElementById("selectedMove").innerText =
+    "Selected: " + labels[type];
+}
+
+function finalise(){
+  const move = document.getElementById("firstMove").value;
+
+  if(!move || !selectedMoveType){
+    alert("Define your first move and select a type");
+    return;
+  }
+
+  state.firstMove = move;
+  state.moveType = selectedMoveType;
+
+  localStorage.setItem("interrupt", JSON.stringify(state));
+
+  const extended = `
+SYSTEM SNAPSHOT
+
+Domain: ${state.domain}
+
+Structure:
+${state.structure}
+
+Pattern:
+${state.pattern}
+
+Tension:
+${state.tension}
+
+Cost:
+${state.cost}
+
+Insight:
+This is not a personal failure.
+This is a structural condition.
+
+---
+
+FIRST MOVE:
+${state.firstMove}
+
+TYPE:
+${state.moveType}
+`;
+
+  document.getElementById("finalOutput").innerText = extended;
+  document.getElementById("finalBlock").classList.remove("hidden");
+
+  updateProgress(100);
+}
+
+async function sendReport(){
+  const formData = new FormData();
+
+  formData.append("email", state.email);
+  formData.append("report", document.getElementById("finalOutput").innerText);
+
+  await fetch("https://formspree.io/f/YOUR_FORMSPREE_ID", {
+    method: "POST",
+    body: formData,
+    headers: { 'Accept': 'application/json' }
+  });
+
+  alert("Report sent");
+}
+
+function goNext(){
+  alert("Redirect to STABILISE dashboard");
+}
+
+function reset(){
+  localStorage.removeItem("interrupt");
+  location.reload();
+}
+
+// LOAD SESSION
+window.onload = () => {
+  if(state.domain){
+    document.getElementById("section1").classList.add("hidden");
+    document.getElementById("section2").classList.remove("hidden");
+    updateProgress(50);
+  }
+
+  if(state.tension){
+    generateOutput();
+  }
+
+  if(state.firstMove){
+    document.getElementById("outputSection").classList.remove("hidden");
+    document.getElementById("finalBlock").classList.remove("hidden");
+    updateProgress(100);
+  }
+};
 </script>
 
 </body>
