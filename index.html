@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>INTERRUPT — System Visibility</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+  margin:0;
+  font-family: Inter, sans-serif;
+  background:#0A0A0A;
+  color:#EAEAEA;
+}
+
+.container {
+  max-width: 700px;
+  margin: auto;
+  padding: 24px;
+}
+
+h1 { font-size: 26px; }
+h2 { margin-top: 30px; }
+p { opacity: 0.7; }
+
+.section {
+  margin-top: 30px;
+  padding: 20px;
+  border: 1px solid #2A2A2A;
+  border-radius: 8px;
+}
+
+input, textarea, select {
+  width: 100%;
+  margin-top: 10px;
+  padding: 12px;
+  background: transparent;
+  border: 1px solid #2A2A2A;
+  color: #EAEAEA;
+  border-radius: 4px;
+}
+
+button {
+  margin-top: 16px;
+  padding: 14px;
+  width: 100%;
+  background: #111;
+  border: 1px solid #2A2A2A;
+  color: #EAEAEA;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #151515;
+}
+
+.hidden { display:none; }
+
+.output {
+  white-space: pre-wrap;
+  background: #111;
+  padding: 16px;
+  margin-top: 20px;
+  border-radius: 6px;
+  border: 1px solid #2A2A2A;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>INTERRUPT</h1>
+<p>You are not stuck. You are operating inside a system.</p>
+
+<!-- SECTION 1 -->
+<div class="section" id="section1">
+<h2>1. Identify the Structure</h2>
+
+<form id="form1">
+
+<label>Where is this happening?</label>
+<select name="domain" id="domain" required>
+<option value="">Select</option>
+<option value="Roles">Roles</option>
+<option value="Environment">Environment</option>
+<option value="Routine">Routine</option>
+<option value="Pressure">Pressure</option>
+</select>
+
+<label>Describe what is currently happening</label>
+<textarea name="structure" id="structure" required></textarea>
+
+<label>What is repeatedly occurring?</label>
+<textarea name="pattern" id="pattern" required></textarea>
+
+<label>Your Email</label>
+<input type="email" name="email" id="email" required>
+
+<button type="submit">Continue</button>
+
+</form>
+</div>
+
+<!-- SECTION 2 -->
+<div class="section hidden" id="section2">
+<h2>2. Structural Tension</h2>
+
+<form id="form2">
+
+<label>Where is the tension or conflict?</label>
+<textarea name="tension" id="tension" required></textarea>
+
+<label>What is this costing you?</label>
+<textarea name="cost" id="cost" required></textarea>
+
+<input type="hidden" name="domain" id="hiddenDomain">
+<input type="hidden" name="structure" id="hiddenStructure">
+<input type="hidden" name="pattern" id="hiddenPattern">
+<input type="hidden" name="email" id="hiddenEmail">
+
+<button type="submit">Generate System View</button>
+
+</form>
+</div>
+
+<!-- OUTPUT -->
+<div class="section hidden" id="outputSection">
+<h2>System Snapshot</h2>
+<div class="output" id="output"></div>
+</div>
+
+</div>
+
+<script>
+const form1 = document.getElementById("form1");
+const form2 = document.getElementById("form2");
+
+form1.addEventListener("submit", async function(e){
+  e.preventDefault();
+
+  const data = new FormData(form1);
+
+  await fetch("https://formspree.io/f/YOUR_FORMSPREE_ID", {
+    method: "POST",
+    body: data,
+    headers: { 'Accept': 'application/json' }
+  });
+
+  // pass values to section 2
+  document.getElementById("hiddenDomain").value = data.get("domain");
+  document.getElementById("hiddenStructure").value = data.get("structure");
+  document.getElementById("hiddenPattern").value = data.get("pattern");
+  document.getElementById("hiddenEmail").value = data.get("email");
+
+  document.getElementById("section1").classList.add("hidden");
+  document.getElementById("section2").classList.remove("hidden");
+});
+
+form2.addEventListener("submit", async function(e){
+  e.preventDefault();
+
+  const data = new FormData(form2);
+
+  await fetch("https://formspree.io/f/YOUR_FORMSPREE_ID", {
+    method: "POST",
+    body: data,
+    headers: { 'Accept': 'application/json' }
+  });
+
+  // generate output
+  const output = `
+SYSTEM SNAPSHOT
+
+Domain: ${data.get("domain")}
+
+Structure:
+${data.get("structure")}
+
+Pattern:
+${data.get("pattern")}
+
+Tension:
+${data.get("tension")}
+
+Cost:
+${data.get("cost")}
+
+Insight:
+This is not a personal failure.
+This is a structural condition.
+`;
+
+  document.getElementById("output").innerText = output;
+
+  document.getElementById("section2").classList.add("hidden");
+  document.getElementById("outputSection").classList.remove("hidden");
+});
+</script>
+
+</body>
+</html>
