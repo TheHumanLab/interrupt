@@ -23,24 +23,47 @@
       color:var(--white);
       font-family:'Inter',sans-serif;
       font-size:16px;
-      line-height:1.5;
+      line-height:1.7;
       -webkit-font-smoothing:antialiased;
+      padding:48px 20px;
     }
-    .wrap{max-width:900px;margin:0 auto;padding:0 24px}
-    .gate{max-width:900px;margin:25% auto;text-align:left;padding:0 24px}
+    .wrap{max-width:680px;margin:0 auto}
+    .gate{max-width:680px;margin:20% auto;text-align:center}
     .page{display:none}
     .page.active{display:block}
     
-    /* TYPOGRAPHY - AUTHORITY */
     h1{
       font-family:'Bebas Neue',sans-serif;
       font-size:clamp(80px,15vw,160px);
       color:var(--white);
-      letter-spacing:-0.02em;
+      letter-spacing:-0.03em;
       line-height:0.85;
       font-weight:400;
-      margin-bottom:32px;
+      margin-bottom:12px;
     }
+    .subtitle{
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:0.2em;
+      color:var(--red);
+      font-weight:700;
+      margin-bottom:8px;
+    }
+    .tagline{
+      font-size:14px;
+      color:#999;
+      margin-bottom:48px;
+      text-transform:uppercase;
+      letter-spacing:0.1em;
+    }
+    
+    .section{
+      border-top:1px solid var(--divider);
+      padding:48px 0;
+      margin:48px 0;
+    }
+    .section:first-of-type{border-top:none;padding-top:0;margin-top:0}
+    
     h2{
       font-family:'Bebas Neue',sans-serif;
       font-size:clamp(48px,8vw,80px);
@@ -48,10 +71,9 @@
       letter-spacing:-0.01em;
       line-height:0.9;
       font-weight:400;
-      margin:80px 0 24px 0;
+      margin:0 0 24px 0;
     }
     h3{
-      font-family:'Inter',sans-serif;
       font-size:11px;
       text-transform:uppercase;
       letter-spacing:0.2em;
@@ -59,26 +81,18 @@
       font-weight:700;
       margin:48px 0 16px 0;
     }
-    
-    p{
-      color:var(--white);
-      font-size:16px;
-      margin-bottom:20px;
-      max-width:580px;
-    }
-    .lead{
+    h4{
+      font-family:'Inter',sans-serif;
       font-size:18px;
-      line-height:1.6;
-      margin-bottom:48px;
-      max-width:520px;
-    }
-    ul{
-      padding-left:0;
-      margin-bottom:32px;
-      list-style:none;
-    }
-    li{
       color:var(--white);
+      font-weight:700;
+      margin:32px 0 16px 0;
+    }
+    
+    p{color:#CCC;font-size:16px;margin-bottom:16px;max-width:580px}
+    ul{padding-left:0;margin-bottom:24px;list-style:none}
+    li{
+      color:#CCC;
       font-size:16px;
       margin-bottom:12px;
       padding-left:20px;
@@ -92,20 +106,6 @@
     }
     strong{font-weight:700;color:var(--white)}
     
-    /* LAYOUT - EDITORIAL */
-    .section{
-      border-top:1px solid var(--divider);
-      padding:64px 0;
-      margin:0;
-    }
-    .section:first-of-type{border-top:none;padding-top:0}
-    .divider{
-      height:1px;
-      background:var(--divider);
-      margin:80px 0;
-    }
-    
-    /* CALLOUT - RED SIGNAL ONLY */
     .signal{
       border:1px solid var(--red);
       padding:32px;
@@ -113,10 +113,15 @@
     }
     .signal p:last-child{margin-bottom:0}
     
-    /* FORM - MINIMAL */
+    .divider{
+      height:1px;
+      background:var(--divider);
+      margin:64px 0;
+    }
+    
     label{
       display:block;
-      margin:48px 0 12px 0;
+      margin:32px 0 12px 0;
       font-size:11px;
       color:var(--white);
       text-transform:uppercase;
@@ -131,7 +136,7 @@
       width:100%;
       padding:16px 0;
       font-family:'Inter',sans-serif;
-      font-size:18px;
+      font-size:16px;
       border-radius:0;
       transition:border 0.2s;
     }
@@ -139,7 +144,7 @@
       outline:none;
       border-bottom:1px solid var(--red);
     }
-    textarea{min-height:120px;resize:vertical;line-height:1.6}
+    textarea{min-height:80px;resize:vertical;line-height:1.6}
     select{cursor:pointer}
     input[type=checkbox]{
       margin-right:12px;
@@ -148,7 +153,6 @@
       accent-color:var(--red);
     }
     
-    /* CTA - RED ACTION ONLY */
     .btn{
       background:var(--red);
       color:var(--white);
@@ -176,24 +180,44 @@
       text-transform:uppercase;
       letter-spacing:0.1em;
     }
-    .grid{display:grid;grid-template-columns:1fr 1fr;gap:48px}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:32px}
     .checkbox-group label{
       display:flex;
       align-items:flex-start;
       margin:16px 0;
       font-size:16px;
-      color:var(--white);
+      color:#CCC;
       text-transform:none;
       letter-spacing:0;
       font-weight:400;
     }
     .checkbox-group input{margin-top:5px;flex-shrink:0}
     
-    @media(max-width:768px){
-      body{padding:32px 20px}
-      .grid{grid-template-columns:1fr;gap:32px}
-      h1{margin-bottom:24px}
-      .section{padding:48px 0}
+    table{
+      width:100%;
+      border-collapse:collapse;
+      margin:24px 0;
+      font-size:14px;
+    }
+    th,td{
+      border:1px solid var(--divider);
+      padding:12px;
+      text-align:left;
+    }
+    th{
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:0.1em;
+      color:var(--red);
+      font-weight:700;
+    }
+    
+    @media(max-width:640px){
+      body{padding:32px 16px}
+      .section{padding:40px 0}
+      .grid{grid-template-columns:1fr}
+      table{font-size:12px}
+      th,td{padding:8px}
     }
   </style>
 </head>
@@ -204,98 +228,48 @@
   </div>
 
   <div class="wrap" id="app">
-    <!-- PAGE 1: WELCOME / ORIENTATION -->
+    <!-- PAGE 1: WELCOME -->
     <div class="page active" id="page-intro">
-      <h1>INTERRUPT<br>THE LOOP.</h1>
-      <p class="lead">Right now, something is running on autopilot. A habit. A reaction. A pattern you don’t want—but still do.</p>
-      
-      <div class="divider"></div>
+      <h1>INTERRUPT</h1>
+      <div class="subtitle">A BEHAVIOURAL INSTRUMENT FOR IMMEDIATE CONTROL</div>
+      <p class="tagline">State: “I can’t stop”<br>Function: Break behavioural loops in real time<br>Outcome: Control regained within minutes</p>
 
       <div class="section">
-        <h3>WHAT THIS IS</h3>
-        <p>INTERRUPT is a short, structured session.</p>
-        <p>You will:</p>
+        <h3>SECTION 0 · ENTRY CONDITION</h3>
+        <p>Use this the moment you notice:</p>
         <ul>
-          <li>identify the pattern</li>
-          <li>break it once in real time</li>
-          <li>replace it with a new action</li>
-          <li>lock that action in</li>
+          <li>“I shouldn’t be doing this”</li>
+          <li>“I’ve been here too long”</li>
+          <li>“I can’t stop”</li>
+          <li>You are repeating behaviour automatically</li>
         </ul>
-        <p><strong>This is not about thinking.<br>It’s about doing something different, immediately.</strong></p>
-      </div>
-
-      <div class="section">
-        <h3>HOW THIS WORKS</h3>
-        <p>Most behaviours follow a loop:</p>
-        <ul>
-          <li>Something triggers it → You act → You feel brief relief → There’s a cost later</li>
-        </ul>
-        <p>In this session, you will step in before the action takes over and change what happens next.</p>
-      </div>
-
-      <div class="signal">
-        <h3>⚠️ IMPORTANT RULE</h3>
-        <p><strong>You have about 3 seconds to act.</strong></p>
-        <p>When the trigger happens:</p>
-        <ul>
-          <li>If you hesitate → you’ll default to the old behaviour</li>
-          <li>If you act → you interrupt the pattern</li>
-        </ul>
-        <p><strong>This only works if you move quickly.</strong></p>
-      </div>
-
-      <div class="section">
-        <h3>WHAT YOU’LL DO INSIDE</h3>
-        <p><strong>Capture the pattern</strong><br>What started it, what you did, and what it cost you</p>
-        <p><strong>Break it down</strong><br>See the pattern clearly so it becomes controllable</p>
-        <p><strong>Choose a new action</strong><br>Something small, physical, and easy to do under pressure</p>
-        <p><strong>Use it in real time</strong><br>When the trigger happens, act within seconds</p>
-        <p><strong>Record what happened</strong><br>This locks in the change</p>
-      </div>
-
-      <div class="section">
-        <h3>IMPORTANT CONSTRAINTS</h3>
-        <p>To make this work:</p>
-        <ul>
-          <li>Keep your replacement action simple (under 30 seconds)</li>
-          <li>Make it physical (not just thinking)</li>
-          <li>Don’t wait until you “feel ready”</li>
-          <li>Don’t overthink your answers</li>
-        </ul>
-        <p><strong>If it feels too complicated, it won’t work.<br>Simpler is stronger.</strong></p>
-      </div>
-
-      <div class="section">
-        <h3>WHEN TO USE THIS</h3>
-        <p>Use INTERRUPT when you notice:</p>
-        <ul>
-          <li>“I can’t stop doing this”</li>
-          <li>“I keep repeating this”</li>
-          <li>“I know I shouldn’t, but I still do it”</li>
-        </ul>
-      </div>
-
-      <div class="section">
-        <h3>WHAT SUCCESS LOOKS LIKE</h3>
-        <p>You don’t need to be perfect.</p>
-        <p><strong>This works if:</strong></p>
-        <div class="checkbox-group">
-          <label><input type="checkbox" disabled> You interrupt the pattern at least once</label>
-          <label><input type="checkbox" disabled> You act without overthinking</label>
-          <label><input type="checkbox" disabled> The urge weakens, even slightly</label>
+        <div class="signal">
+          <strong>Do not wait.<br>This only works inside the loop—not after it.</strong>
         </div>
-        <p><strong>That’s enough to shift the system.</strong></p>
       </div>
 
-      <div class="signal">
-        <h3>FINAL NOTE</h3>
-        <p>You’re not trying to eliminate behaviour.</p>
-        <p><strong>You’re learning how to step in and change it when it starts.</strong></p>
-        <p>Start with the next moment it happens.</p>
+      <div class="section">
+        <h3>SECTION 1 · SYSTEM ORIENTATION</h3>
+        <p>You are not lacking discipline.<br>You are inside a loop:</p>
+        <ul>
+          <li>Something triggers</li>
+          <li>You act automatically</li>
+          <li>You get short relief</li>
+          <li>The cost builds quietly</li>
+        </ul>
+        <p>Your brain is solving for immediate relief, not long-term control.</p>
+        
+        <div class="signal">
+          <h3>CORE TRUTH</h3>
+          <p><strong>You will not think your way out of this.<br>You must interrupt the behaviour itself.</strong></p>
+        </div>
+
+        <h4>WHAT THIS DOES</h4>
+        <p>This system inserts a break between trigger and action and replaces it with something you control.</p>
       </div>
 
-      <button class="btn" onclick="startProtocol()">🔴 RUN LIVE INTERRUPT</button>
-      <p class="small">NO TIMER. NO PRESSURE. COMPLETE WHEN READY.</p>
+      <button class="btn" onclick="startProtocol()">RUN LIVE INTERRUPT</button>
+      <p class="small">NO TIMER. NO PREP. COMPLETE WHEN READY.</p>
     </div>
 
     <!-- PAGE 2: LIVE PROTOCOL -->
@@ -309,180 +283,218 @@
         <input type="hidden" name="stripe_session" id="sessionId">
 
         <div class="section">
-          <h3>LOOP IDENTIFICATION</h3>
-          <p class="small">CAPTURE THE LOOP AS IT HAPPENS</p>
-
-          <label>CURRENT LOOP NAME*</label>
-          <input type="text" name="loop_name" required placeholder="Phone scroll spiral">
-
-          <label>WHEN DID THIS LAST HAPPEN?*</label>
+          <h3>SECTION 2 · LOOP IDENTIFICATION</h3>
+          <p class="small">CAPTURE FAST. DO NOT ANALYSE.</p>
+          
+          <h4>CURRENT LOOP</h4>
+          <label>Name it*</label>
+          <input type="text" name="loop_name" required>
+          <label>Last occurrence*</label>
           <input type="text" name="last_occurred" required placeholder="Today 11:03pm">
 
-          <label>TRIGGER — WHAT STARTED IT?*</label>
-          <input type="text" name="trigger" required placeholder="Notification, feeling, time of day">
-
-          <label>BEHAVIOUR — WHAT DID YOU DO?*</label>
-          <input type="text" name="behaviour" required placeholder="Be specific. Not 'procrastination'">
-
-          <label>IMMEDIATE RELIEF — WHAT DID IT GIVE YOU?*</label>
-          <input type="text" name="relief" required placeholder="Escape, dopamine, avoidance">
-
-          <label>COST — WHAT DID IT TAKE?*</label>
-          <input type="text" name="cost" required placeholder="Time, energy, reputation, output">
+          <h4>SNAPSHOT</h4>
+          <label>Trigger (what started it)*</label>
+          <input type="text" name="trigger" required placeholder="Time / place / feeling">
+          <label>Behaviour (what you did)*</label>
+          <input type="text" name="behaviour" required placeholder="Exact action">
+          <label>Relief (what it gave you)*</label>
+          <input type="text" name="relief" required>
+          <label>Cost (what it took)*</label>
+          <input type="text" name="cost" required placeholder="Real consequence">
         </div>
 
         <div class="section">
-          <h3>LOOP DECONSTRUCTION</h3>
-          <p class="small">STRUCTURAL. NOT EMOTIONAL.</p>
-
+          <h3>SECTION 3 · INSTRUMENT 1 — LOOP DECONSTRUCTION</h3>
+          <p class="small">MAKE THE LOOP VISIBLE</p>
+          
+          <h4>LOOP PRESSURE</h4>
           <div class="grid">
             <div>
-              <label>URGE STRENGTH (0–10)*</label>
+              <label>Urge strength (0–10)*</label>
               <input type="number" name="urge_strength" min="0" max="10" required>
             </div>
             <div>
-              <label>LOSS OF CONTROL (0–10)*</label>
+              <label>Loss of control (0–10)*</label>
               <input type="number" name="loss_control" min="0" max="10" required>
             </div>
             <div>
-              <label>FREQUENCY PER DAY*</label>
+              <label>Frequency*</label>
               <input type="number" name="frequency" min="0" required>
             </div>
           </div>
 
-          <label>STRUCTURAL INSIGHT — COMPLETE*</label>
-          <input type="text" name="structural_insight" required placeholder="This loop is maintained because it gives me ___ immediately, while costing me ___ over time.">
+          <h4>PATTERN INSIGHT</h4>
+          <label>This loop gives me ___ immediately*</label>
+          <input type="text" name="pattern_gives" required>
+          <label>And costs me ___ over time*</label>
+          <input type="text" name="pattern_costs" required>
+
+          <h4>EARLY DETECTION</h4>
+          <label>This loop usually starts when*</label>
+          <input type="text" name="early_starts" required>
+          <label>The earliest warning sign is*</label>
+          <input type="text" name="warning_sign" required>
         </div>
 
         <div class="section">
-          <h3>INTERRUPTION POINT</h3>
-          <p class="small">INSERT BREAK BETWEEN TRIGGER AND BEHAVIOUR</p>
-
-          <label>WHEN DOES THE LOOP BECOME IRREVERSIBLE?*</label>
+          <h3>SECTION 4 · INTERRUPTION POINT</h3>
+          <p class="small">YOU ARE NOT REMOVING TRIGGERS. YOU ARE CHOOSING WHERE TO BREAK THE CHAIN.</p>
+          
+          <h4>IDENTIFY YOUR WINDOW*</h4>
           <select name="break_window" required>
             <option value="">SELECT</option>
             <option value="Before behaviour starts">Before behaviour starts</option>
-            <option value="During first 10 seconds">During first 10 seconds</option>
+            <option value="First 5–10 seconds">First 5–10 seconds</option>
             <option value="Mid-behaviour">Mid-behaviour</option>
-            <option value="After completion">After completion</option>
+            <option value="After">After</option>
           </select>
 
-          <label>YOUR EARLIEST INTERRUPTION POINT*</label>
-          <input type="text" name="interruption_point" required placeholder="Moment I unlock phone">
+          <div class="signal">
+            <label>My interruption point is:*</label>
+            <input type="text" name="interruption_point" required>
+            <p class="small">Choose the earliest possible moment or the loop will win.</p>
+          </div>
         </div>
 
         <div class="section">
-          <h3>CONTROL REWRITE</h3>
+          <h3>SECTION 5 · INSTRUMENT 2 — CONTROL REWRITE</h3>
+          <p class="small">YOU CANNOT REMOVE THE BEHAVIOUR. YOU MUST REPLACE IT INSTANTLY.</p>
+          
+          <h4>ACTION RULES — NON-NEGOTIABLE</h4>
+          <p>Your action must:</p>
+          <ul>
+            <li>take under 30 seconds</li>
+            <li>be physical</li>
+            <li>require no motivation</li>
+            <li>be possible immediately</li>
+          </ul>
+
+          <label>New Action (≤ 30 sec)*</label>
+          <input type="text" name="new_action" required placeholder="Stand up, lock phone, drink water, say 'stop' out loud">
+
+          <label>Control Statement*</label>
+          <input type="text" name="control_statement" required placeholder="When ___ happens, I will ___ instead">
+
           <div class="signal">
-            <strong>REPLACEMENT ACTION MUST:</strong><br>
-            1. TAKE LESS THAN 30 SECONDS<br>
-            2. REQUIRE NO MOTIVATION<br>
-            3. BE PHYSICALLY EXECUTABLE<br>
-            4. SHIFT STATE
+            <label>OVERRIDE LINE — CRITICAL*</label>
+            <input type="text" name="override_line" required placeholder="Even if I don't feel like it, I will still: ___">
           </div>
-
-          <label>NEW ACTION — ≤ 30 SECONDS, PHYSICAL*</label>
-          <input type="text" name="new_action" required placeholder="Stand up + walk 10 steps">
-
-          <label>CONTROL STATEMENT — WRITE EXACTLY*</label>
-          <input type="text" name="control_statement" required placeholder="When ___ happens, I will ___ instead.">
         </div>
 
         <div class="section">
-          <h3>FORCED MICRO ACTION</h3>
+          <h3>SECTION 6 · EXECUTION LAYER</h3>
+          <p class="small">THIS IS WHERE CONTROL IS WON OR LOST</p>
+          
           <div class="signal">
-            <strong>3-SECOND RULE</strong><br>
-            FROM TRIGGER → ACTION: NO DELAY BEYOND 3 SECONDS<br>
-            IF DELAY OCCURS: LOOP WINS
+            <h3>⚠️ INTERRUPT COMMAND</h3>
+            <p><strong>Say this out loud:<br>“STOP. NOT THIS.”<br>Then move immediately.</strong></p>
           </div>
 
-          <label>TRIGGER OCCURRED AT*</label>
+          <h4>THE 3-SECOND RULE</h4>
+          <p><strong>You have 3 seconds.<br>Trigger → Action<br>No delay.</strong></p>
+          <p>From this point, hesitation is the loop.<br>Action is control.</p>
+
+          <label>Trigger occurred at*</label>
           <input type="text" name="trigger_time" required placeholder="11:03pm">
-
-          <label>DID YOU EXECUTE NEW ACTION?*</label>
+          <label>Did you act within 3 seconds?*</label>
           <select name="executed" required>
             <option value="">SELECT</option>
             <option value="Yes">Yes</option>
             <option value="No">No</option>
           </select>
-
-          <label>IF NO — WHAT BLOCKED EXECUTION?</label>
+          <label>If no — What blocked you</label>
           <input type="text" name="blocker" placeholder="Leave blank if Yes above">
         </div>
 
         <div class="section">
-          <h3>OUTPUT COMPARISON</h3>
+          <h3>SECTION 7 · OUTPUT COMPARISON</h3>
+          <p class="small">MAKE THE SHIFT VISIBLE</p>
+          
           <div class="grid">
             <div>
-              <label>OLD SYSTEM</label>
+              <h4>OLD SYSTEM</h4>
               <input type="text" name="old_trigger" placeholder="Trigger">
-              <input type="text" name="old_behaviour" placeholder="Behaviour" style="margin-top:16px">
-              <input type="text" name="old_result" placeholder="Result" style="margin-top:16px">
+              <input type="text" name="old_behaviour" placeholder="Behaviour" style="margin-top:12px">
+              <input type="text" name="old_result" placeholder="Result" style="margin-top:12px">
             </div>
             <div>
-              <label>NEW SYSTEM</label>
+              <h4>NEW SYSTEM</h4>
               <input type="text" name="new_trigger" placeholder="Trigger">
-              <input type="text" name="new_action_final" placeholder="Action" style="margin-top:16px">
-              <input type="text" name="new_result" placeholder="Result" style="margin-top:16px">
+              <input type="text" name="new_action_final" placeholder="Action" style="margin-top:12px">
+              <input type="text" name="new_result" placeholder="Result" style="margin-top:12px">
             </div>
           </div>
 
-          <label>SYSTEM SHIFT STATEMENT*</label>
-          <input type="text" name="shift_statement" required placeholder="Previously I ___. Now I ___.">
+          <label>SHIFT STATEMENT*</label>
+          <input type="text" name="shift_statement" required placeholder="Before: I ___ / Now: I ___">
         </div>
 
         <div class="section">
-          <h3>FAILURE ANALYSIS</h3>
-          <label>FAILURE TYPE</label>
+          <h3>SECTION 9 · FAILURE ANALYSIS</h3>
+          <p class="small">FAILURE IS SYSTEM FEEDBACK</p>
+          
+          <label>Identify</label>
           <div class="checkbox-group">
-            <label><input type="checkbox" name="failure_type[]" value="Action too large"> Action too large</label>
-            <label><input type="checkbox" name="failure_type[]" value="Trigger not identified early enough"> Trigger not identified early enough</label>
-            <label><input type="checkbox" name="failure_type[]" value="Delay exceeded 3 seconds"> Delay exceeded 3 seconds</label>
+            <label><input type="checkbox" name="failure_type[]" value="Action too big"> Action too big</label>
+            <label><input type="checkbox" name="failure_type[]" value="Missed 3-second window"> Missed 3-second window</label>
+            <label><input type="checkbox" name="failure_type[]" value="Trigger noticed too late"> Trigger noticed too late</label>
             <label><input type="checkbox" name="failure_type[]" value="No physical movement"> No physical movement</label>
-            <label><input type="checkbox" name="failure_type[]" value="Environment friction too high"> Environment friction too high</label>
+            <label><input type="checkbox" name="failure_type[]" value="Environment supports loop"> Environment supports loop</label>
           </div>
 
-          <label>CORRECTION*</label>
-          <input type="text" name="correction" required placeholder="To improve interruption, I will reduce the action to: ___">
+          <label>I will reduce my action to:*</label>
+          <input type="text" name="correction_action" required>
+          <label>I will move my interruption point earlier to:*</label>
+          <input type="text" name="correction_point" required>
         </div>
 
         <div class="section">
-          <h3>PROTOCOL COMPLETION</h3>
+          <h3>SECTION 10 · ENVIRONMENT CONTROL</h3>
+          <p class="small">IF THE ENVIRONMENT SUPPORTS THE LOOP, YOU WILL LOSE</p>
+          
+          <label>I will remove:*</label>
+          <input type="text" name="env_remove" required>
+          <label>I will add:*</label>
+          <input type="text" name="env_add" required>
+        </div>
+
+        <div class="section">
+          <h3>SECTION 11 · PROTOCOL COMPLETION</h3>
+          <p class="small">YOU DO NOT COMPLETE THIS BY FEELING BETTER</p>
+          
           <div class="checkbox-group">
-            <label><input type="checkbox" name="complete[]" value="Interrupt loop at least once"> I interrupted the loop at least once</label>
-            <label><input type="checkbox" name="complete[]" value="Execute without thinking"> I executed without thinking</label>
-            <label><input type="checkbox" name="complete[]" value="Urge weakens"> The urge weakens, even slightly</label>
+            <label><input type="checkbox" name="complete[]" value="Interrupt at least once"> You interrupt at least once</label>
+            <label><input type="checkbox" name="complete[]" value="Act without thinking"> You act without thinking</label>
+            <label><input type="checkbox" name="complete[]" value="Urge weakens"> The urge weakens</label>
           </div>
 
           <div class="grid">
             <div>
-              <label>INTERRUPT PROTOCOL NAME*</label>
-              <input type="text" name="protocol_name" required>
+              <label>Loop Detected*</label>
+              <input type="text" name="final_loop" required>
             </div>
             <div>
-              <label>PRIMARY LOOP BROKEN*</label>
-              <input type="text" name="loop_broken" required>
+              <label>Trigger Pattern*</label>
+              <input type="text" name="final_trigger" required>
             </div>
             <div>
-              <label>EFFECTIVE REPLACEMENT ACTION*</label>
-              <input type="text" name="effective_action" required>
+              <label>Control Action Installed*</label>
+              <input type="text" name="final_action" required>
             </div>
             <div>
-              <label>CONTROL LEVEL (0–10)*</label>
-              <input type="number" name="control_level" min="0" max="10" required>
+              <label>Execution Speed*</label>
+              <input type="text" name="final_speed" required placeholder="Under 3s / Over 3s">
             </div>
           </div>
+          <label>Control Rating (0–10)*</label>
+          <input type="number" name="control_level" min="0" max="10" required>
 
-          <label>EMAIL FOR YOUR LOCKED PROTOCOL*</label>
+          <label>Email for your Interrupt Protocol*</label>
           <input type="email" name="email" required placeholder="you@domain.com">
-
-          <label>EVIDENCE STATEMENT — MANDATORY*</label>
-          <textarea name="evidence_statement" required placeholder="Describe exactly what you did and saw. E.g. '11:07pm: Put phone in kitchen drawer. Did 10 pushups on tile floor. Felt stupid but did it. Phone still in kitchen.' Be specific."></textarea>
-          <p class="small">NO PHOTO UPLOAD. USE WORDS. SPECIFICITY = PROOF.</p>
         </div>
 
         <button type="submit" class="btn" id="submitBtn">LOCK INTERRUPT PROTOCOL</button>
-        <p class="small">SUBMIT LOCKS YOUR NEW SYSTEM. PROTOCOL DELIVERED IN 12HRS. NO EDIT.</p>
+        <p class="small">THIS LOOP IS NOW INTERRUPTIBLE.<br>YOU DID NOT REMOVE THE URGE. YOU STOPPED OBEYING IT.</p>
       </form>
     </div>
   </div>
@@ -514,12 +526,12 @@
       btn.disabled = true;
       setTimeout(() => {
         document.getElementById('app').innerHTML = `
-          <h1 style="color:var(--success)">INTERRUPT<br>COMPLETE</h1>
-          <p class="lead">New System locked. Check your email in 12hrs.</p>
+          <h1 style="color:var(--red)">INTERRUPT<br>COMPLETE</h1>
+          <p style="font-size:18px;margin-bottom:32px;">Protocol locked. Check your email in 12hrs.</p>
           <div class="signal">
-            <strong>YOU ARE NOT REMOVING BEHAVIOUR.<br>YOU ARE INSTALLING CONTROL.</strong>
+            <strong>THIS LOOP IS NOW INTERRUPTIBLE.</strong>
           </div>
-          <p class="small">YOUR EVIDENCE STATEMENT WAS RECORDED.</p>
+          <p class="small">YOU DID NOT REMOVE THE URGE.<br>YOU STOPPED OBEYING IT.<br><br>IDENTITY LOCK: THIS IS WHAT CONTROL LOOKS LIKE.<br>NOT PERFECT BEHAVIOUR — INTERRUPTED BEHAVIOUR.</p>
         `;
       }, 1000);
     });
