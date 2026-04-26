@@ -1,43 +1,289 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>INTERRUPT — Live Protocol</title>
   <meta name="robots" content="noindex">
   <style>
-    body{background:#0A0A0A;color:#FAFAFA;font-family:monospace;text-align:center;padding:10% 20px}
-    h1{color:#DC2626;font-size:3rem;margin-bottom:40px}
-  .timer{font-size:5rem;margin:40px 0}
-  .dare{font-size:1.5rem;border:2px solid #DC2626;padding:24px;margin:40px auto;max-width:600px}
-  .btn{background:#DC2626;color:#fff;padding:20px 40px;text-decoration:none;font-size:1.2rem;display:inline-block;margin-top:40px}
+    :root {--red:#DC2626; --black:#0A0A0A; --grey:#111; --line:#262626; --white:#FAFAFA; --green:#16A34A;}
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{background:var(--black);color:var(--white);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;line-height:1.6;padding:32px 16px}
+    .wrap{max-width:720px;margin:0 auto;display:none}
+    .gate{max-width:720px;margin:15% auto;text-align:center}
+    h1{font-size:2.2rem;color:var(--red);letter-spacing:-1px;margin-bottom:8px}
+    .state{color:#737373;font-size:0.8rem;text-transform:uppercase;margin-bottom:32px;letter-spacing:.1em}
+    .timer{position:fixed;top:16px;right:16px;border:1px solid var(--red);padding:6px 12px;font-size:0.85rem;background:var(--black);z-index:100}
+    .section{border-top:1px solid var(--line);padding:32px 0;margin:32px 0}
+    .section:first-of-type{border-top:none;padding-top:0;margin-top:0}
+    h2{font-size:0.9rem;margin:0 0 16px;text-transform:uppercase;letter-spacing:.1em;color:var(--red)}
+    h3{font-size:0.85rem;margin:24px 0 8px;color:#A3A3A3;text-transform:uppercase;letter-spacing:.05em}
+    p,li{color:#D4D4D4;font-size:0.95rem;margin-bottom:12px}
+    ul{padding-left:20px}
+    label{display:block;margin:24px 0 8px;font-size:0.85rem;color:#A3A3A3}
+    input[type=text],input[type=email],input[type=number],textarea,select{background:var(--grey);border:1px solid var(--line);color:var(--white);width:100%;padding:12px;font-family:inherit;font-size:0.95rem;border-radius:0}
+    input:focus,textarea:focus{outline:none;border-color:var(--red)}
+    textarea{min-height:80px;resize:vertical}
+    input[type=file]{margin-top:8px;font-size:0.85rem}
+    input[type=checkbox]{margin-right:8px}
+    .inline{display:flex;gap:16px}
+    .inline > div{flex:1}
+    .btn{background:var(--red);color:var(--white);border:none;padding:16px 32px;font-size:0.9rem;cursor:pointer;width:100%;margin-top:32px;text-transform:uppercase;letter-spacing:.1em;font-weight:700}
+    .btn:disabled{background:#262626;color:#525252;cursor:not-allowed}
+    .small{font-size:0.75rem;color:#525252;margin-top:8px;line-height:1.5}
+    .rule{background:var(--grey);border-left:2px solid var(--red);padding:16px;margin:16px 0;font-size:0.9rem}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    @media(max-width:600px){.grid{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
-  <h1>INTERRUPT</h1>
-  <div class="timer" id="countdown">10:00</div>
-
-  <div class="dare">
-    OLD: 11:03pm → Phone → 1:22am → Self-hatred<br><br>
-    NEW: 11:03pm → Phone in kitchen → 10 pushups → Sleep
+  <div class="gate" id="gate">
+    <h1>Verifying payment...</h1>
+    <p class="small">If you paid and see this for more than 5 seconds, email us with your Stripe receipt.</p>
   </div>
 
-  <p>When timer hits 0:00, your phone goes in the kitchen. Now.</p>
-  <p>Before you do, click once to signal commitment:</p>
+  <div class="wrap" id="app">
+    <div class="timer" id="timer">15:00</div>
+    
+    <h1>INTERRUPT PROTOCOL</h1>
+    <div class="state">State: “I can’t stop” — Function: Behavioural loop interruption</div>
+    
+    <div class="rule">
+      You are not dealing with lack of discipline.<br>
+      You are inside a closed behavioural loop.<br><br>
+      This protocol does one thing: Break the loop at the behavioural level.<br>
+      Not reflection. Not awareness. Interruption.
+    </div>
 
-  <a href="https://formspree.io/f/myklakzb" class="btn" onclick="fetch(this.href,{method:'POST',body:new FormData(Object.assign(new FormData(),{append:(k,v)=>FormData.prototype.append.call(this,k,v)},['form'].reduce((d,k)=>(d.append('product','INTERRUPT-COMMIT'),d.append('email','CUSTOMER_EMAIL'),d)))));this.textContent='COMMITTED — NOW GO';this.style.background='#16A34A';return false;">
-    I COMMIT — 10 PUSHUPS NOW
-  </a>
+    <form action="https://formspree.io/f/myklakzb" method="POST" enctype="multipart/form-data" id="interruptForm">
+      <input type="hidden" name="_subject" value="INTERRUPT — Live Completion">
+      <input type="hidden" name="product" value="INTERRUPT_LIVE">
+      <input type="hidden" name="stripe_session" id="sessionId">
+
+      <div class="section">
+        <h2>Section 2 · Loop Identification — Snap Capture</h2>
+        <p class="small">Do not overanalyse. Capture the loop as it happens.</p>
+        
+        <label>Current Loop Name*</label>
+        <input type="text" name="loop_name" required placeholder="e.g. Phone scroll spiral, Avoidance loop, Sugar spike">
+        
+        <label>When did this last happen?*</label>
+        <input type="text" name="last_occurred" required placeholder="Today 11:03pm">
+        
+        <h3>Loop Snapshot</h3>
+        <label>Trigger — What started it?*</label>
+        <input type="text" name="trigger" required placeholder="Notification, feeling, time of day">
+        
+        <label>Behaviour — What did you do?*</label>
+        <input type="text" name="behaviour" required placeholder="Be specific. Not 'procrastination' — what exactly?">
+        
+        <label>Immediate Relief — What did it give you?*</label>
+        <input type="text" name="relief" required placeholder="Escape, dopamine, avoidance">
+        
+        <label>Cost — What did it take?*</label>
+        <input type="text" name="cost" required placeholder="Time, energy, reputation, output">
+      </div>
+
+      <div class="section">
+        <h2>Section 3 · Instrument 1 — Loop Deconstruction</h2>
+        <p class="small">This is structural, not emotional. Trigger must be observable. Cost must be real.</p>
+        
+        <h3>Loop Intensity Score</h3>
+        <div class="grid">
+          <div>
+            <label>Urge strength (0–10)*</label>
+            <input type="number" name="urge_strength" min="0" max="10" required>
+          </div>
+          <div>
+            <label>Loss of control (0–10)*</label>
+            <input type="number" name="loss_control" min="0" max="10" required>
+          </div>
+          <div>
+            <label>Frequency per day*</label>
+            <input type="number" name="frequency" min="0" required>
+          </div>
+        </div>
+
+        <label>Structural Insight — Complete*</label>
+        <input type="text" name="structural_insight" required placeholder="This loop is maintained because it gives me ___ immediately, while costing me ___ over time.">
+      </div>
+
+      <div class="section">
+        <h2>Section 4 · Interruption Point</h2>
+        <p class="small">You are inserting a break between trigger and behaviour.</p>
+        
+        <label>When does the loop become irreversible?*</label>
+        <select name="break_window" required>
+          <option value="">Select earliest point</option>
+          <option value="Before behaviour starts">Before behaviour starts</option>
+          <option value="During first 10 seconds">During first 10 seconds</option>
+          <option value="Mid-behaviour">Mid-behaviour</option>
+          <option value="After completion">After completion</option>
+        </select>
+
+        <label>Your earliest interruption point*</label>
+        <input type="text" name="interruption_point" required placeholder="e.g. Moment I unlock phone, 3 seconds after trigger">
+      </div>
+
+      <div class="section">
+        <h2>Section 5 · Instrument 2 — Control Rewrite</h2>
+        <div class="rule">
+          Your replacement action must:<br>
+          1. Take less than 30 seconds<br>
+          2. Require no motivation<br>
+          3. Be physically executable<br>
+          4. Shift state (not just thought)
+        </div>
+
+        <label>New Action — ≤ 30 seconds, physical, executable under resistance*</label>
+        <input type="text" name="new_action" required placeholder="Stand up + walk 10 steps, Close app + lock phone, Drink water">
+
+        <label>Control Statement — Write exactly*</label>
+        <input type="text" name="control_statement" required placeholder="When ___ happens, I will ___ instead.">
+      </div>
+
+      <div class="section">
+        <h2>Section 6 · Forced Micro Action — Execution Layer</h2>
+        <div class="rule">
+          3-SECOND RULE<br>
+          From trigger → action: no delay beyond 3 seconds<br>
+          If delay occurs: Loop wins
+        </div>
+
+        <label>Trigger occurred at*</label>
+        <input type="text" name="trigger_time" required placeholder="11:03pm">
+
+        <label>Did you execute new action?*</label>
+        <select name="executed" required>
+          <option value="">Select</option>
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
+        </select>
+
+        <label>If no — what blocked execution?</label>
+        <input type="text" name="blocker" placeholder="Leave blank if Yes above">
+      </div>
+
+      <div class="section">
+        <h2>Section 7 · Output Comparison</h2>
+        <div class="grid">
+          <div>
+            <h3>Old System</h3>
+            <input type="text" name="old_trigger" placeholder="Trigger">
+            <input type="text" name="old_behaviour" placeholder="Behaviour" style="margin-top:8px">
+            <input type="text" name="old_result" placeholder="Result" style="margin-top:8px">
+          </div>
+          <div>
+            <h3>New System</h3>
+            <input type="text" name="new_trigger" placeholder="Trigger">
+            <input type="text" name="new_action_final" placeholder="Action" style="margin-top:8px">
+            <input type="text" name="new_result" placeholder="Result" style="margin-top:8px">
+          </div>
+        </div>
+
+        <label>System Shift Statement*</label>
+        <input type="text" name="shift_statement" required placeholder="Previously I ___. Now I ___.">
+      </div>
+
+      <div class="section">
+        <h2>Section 9 · Failure Analysis</h2>
+        <label>Failure Type — Check all that apply</label>
+        <label><input type="checkbox" name="failure_type[]" value="Action too large"> Action too large</label>
+        <label><input type="checkbox" name="failure_type[]" value="Trigger not identified early enough"> Trigger not identified early enough</label>
+        <label><input type="checkbox" name="failure_type[]" value="Delay exceeded 3 seconds"> Delay exceeded 3 seconds</label>
+        <label><input type="checkbox" name="failure_type[]" value="No physical movement"> No physical movement</label>
+        <label><input type="checkbox" name="failure_type[]" value="Environment friction too high"> Environment friction too high</label>
+
+        <label>Correction*</label>
+        <input type="text" name="correction" required placeholder="To improve interruption, I will reduce the action to: ___">
+      </div>
+
+      <div class="section">
+        <h2>Section 10 · Protocol Completion</h2>
+        <label><input type="checkbox" name="complete[]" value="Interrupt loop at least once"> I interrupted the loop at least once</label>
+        <label><input type="checkbox" name="complete[]" value="Execute without thinking"> I executed without thinking</label>
+        <label><input type="checkbox" name="complete[]" value="Urge weakens"> The urge weakens or shortens</label>
+
+        <div class="grid">
+          <div>
+            <label>Interrupt Protocol Name*</label>
+            <input type="text" name="protocol_name" required>
+          </div>
+          <div>
+            <label>Primary Loop Broken*</label>
+            <input type="text" name="loop_broken" required>
+          </div>
+          <div>
+            <label>Effective Replacement Action*</label>
+            <input type="text" name="effective_action" required>
+          </div>
+          <div>
+            <label>Control Level (0–10)*</label>
+            <input type="number" name="control_level" min="0" max="10" required>
+          </div>
+        </div>
+
+        <label>Email for your locked protocol*</label>
+        <input type="email" name="email" required placeholder="you@domain.com">
+
+        <label>Evidence Upload — Mandatory for state shift*</label>
+        <input type="file" name="evidence" accept="image/*,audio/*,video/*" required>
+        <p class="small">Photo of completed action, screenshot of app closed, voice note. No evidence = no protocol locked.</p>
+      </div>
+
+      <button type="submit" class="btn" id="submitBtn">Lock Interrupt Protocol — 15:00</button>
+      <p class="small">Clicking submit locks your New System. You’ll receive the Protocol in 12hrs. There is no edit button. You are not removing behaviour. You are installing control.</p>
+    </form>
+  </div>
 
   <script>
-    let time = 600; // 10 min
-    const el = document.getElementById('countdown');
-    const x = setInterval(() => {
-      let m = Math.floor(time/60), s = time%60;
-      el.textContent = `${m}:${s<10?'0':''}${s}`;
-      if (--time < 0) {
-        clearInterval(x);
-        el.textContent = "GO. NOW.";
-        document.body.style.background = "#DC2626";
-      }
-    }, 1000);
+    const urlParams = new URLSearchParams(window.location.search);
+    const sessionId = urlParams.get('session_id') || urlParams.get('client_reference_id') || 'direct';
+    
+    if (sessionId) {
+      document.getElementById('gate').style.display = 'none';
+      document.getElementById('app').style.display = 'block';
+      document.getElementById('sessionId').value = sessionId;
+      
+      let time = 900; // 15 min for full workthrough
+      const timerEl = document.getElementById('timer');
+      const btn = document.getElementById('submitBtn');
+      
+      const x = setInterval(() => {
+        let m = Math.floor(time/60), s = time%60;
+        timerEl.textContent = `${m}:${s<10?'0':''}${s}`;
+        btn.textContent = `Lock Interrupt Protocol — ${m}:${s<10?'0':''}${s}`;
+        
+        if (--time < 0) {
+          clearInterval(x);
+          timerEl.textContent = "TIME UP";
+          timerEl.style.background = "#DC2626";
+          btn.textContent = "Time expired — Submit now or loop continues";
+        }
+      }, 1000);
+      
+      document.getElementById('interruptForm').addEventListener('submit', function() {
+        btn.textContent = "Locking Protocol...";
+        btn.disabled = true;
+        setTimeout(() => {
+          document.getElementById('app').innerHTML = `
+            <h1 style="color:var(--green)">INTERRUPT COMPLETE</h1>
+            <p>New System locked. Check your email in 12hrs.</p>
+            <div class="rule">
+              You are not removing behaviour.<br>
+              You are installing control.
+            </div>
+            <p class="small">THE HUMAN STACK™ BOX: Physical Trigger Card ships after you prove it once. Link in your email.</p>
+          `;
+        }, 1000);
+      });
+      
+    } else {
+      document.getElementById('gate').innerHTML = `
+        <h1 style="color:var(--red)">Payment required</h1>
+        <p>INTERRUPT is a paid protocol. <a href="/" style="color:var(--red)">Buy access</a></p>
+      `;
+    }
   </script>
 </body>
 </html>
